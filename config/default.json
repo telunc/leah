@@ -1,0 +1,18 @@
+{
+    "database": {
+        "host": "mysql-server",
+        "user": "root",
+        "password": "password",
+        "database": "leah"
+    },
+    "redis": {
+        "host": "redis-server",
+        "port": 6379
+    },
+    "discord": {
+        "prefix": "leah ",
+        "clientId": "",
+        "clientSecret": "",
+        "token": ""
+    }
+}
