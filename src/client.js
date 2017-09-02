@@ -2,8 +2,10 @@ import Discord from 'discord.js';
 import config from 'config';
 import tokenizer from './modules/tokenizer';
 import commands from './structures/commands';
+import socket from './modules/socket/client';
 
 const client = new Discord.Client();
+socket(client);
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);

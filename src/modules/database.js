@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
 
 // test connection
 sequelize.authenticate().then(() => {
-    console.log('Connected');
+    console.log('Database connected');
 }).catch((error) => {
     console.error('Connection error:', error);
 });
@@ -22,12 +22,21 @@ sequelize.authenticate().then(() => {
 // schema
 const Guild = sequelize.define('guild', {
     id: { type: Sequelize.BIGINT, primaryKey: true },
-    prefix: { type: Sequelize.STRING }
+    prefix: { type: Sequelize.STRING },
+    sub_id: { type: Sequelize.BIGINT, unique: true }
 }, {
     timestamps: false
+});
+
+const News = sequelize.define('news', {
+    id: { type: Sequelize.BIGINT, autoIncrement: true, primaryKey: true },
+    uri: { type: Sequelize.STRING, unique: true },
+    image: { type: Sequelize.STRING },
+    title: { type: Sequelize.STRING },
+    description: { type: Sequelize.TEXT }
 });
 
 // sync database
 sequelize.sync({ force: false });
 
-export { Guild };
+export { Guild, News };
