@@ -14,5 +14,8 @@
         "clientId": "",
         "clientSecret": "",
         "token": ""
+    },
+    "battle-net": {
+        "key": ""
     }
 }
