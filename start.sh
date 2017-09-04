@@ -7,4 +7,4 @@ docker run --rm \
     --link mysql-server \
     --link redis-server \
     -e "NODE_ENV=production" \
-    leah-server
+    -d leah-server
