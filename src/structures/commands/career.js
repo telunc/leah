@@ -2,7 +2,7 @@ import Profile from '../../modules/profile';
 
 export default async(tokens, message) => {
 
-    if (tokens.length === 0) return;
+    if (!tokens.length) return;
 
     let battleTag = tokens.shift();
     let career = await Profile.getCareer(battleTag);
@@ -36,7 +36,7 @@ export default async(tokens, message) => {
     let embed = { title: career.battleTag.replace('#', '-') };
     embed.color = 0xFF33A2;
     embed.description = description;
-    if (fields.length > 0) embed.fields = fields;
+    if (fields.length) embed.fields = fields;
     embed.thumbnail = { url: 'https://i.pinimg.com/originals/1d/ae/1a/1dae1ad263fbac22a9296014871cb980.png' };
 
     message.channel.send('', {

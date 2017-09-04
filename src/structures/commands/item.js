@@ -2,7 +2,7 @@ import Item from '../../modules/item';
 
 export default async(tokens, message) => {
 
-    if (tokens.length === 0) return;
+    if (!tokens.length) return;
 
     let name = tokens.join(' ');
     let item = await Item.getItemWithName(name);
@@ -17,16 +17,16 @@ export default async(tokens, message) => {
     if (item.armor) description += `Armor: ${item.armor.min}-${item.armor.max}\n`;
 
     let fields = [];
-    if (item.attributes && item.attributes.primary.length > 0) fields.push({ name: 'Primary', value: getAttributes(item.attributes.primary) });
-    if (item.attributes && item.attributes.secondary.length > 0) fields.push({ name: 'Secondary', value: getAttributes(item.attributes.secondary) });
-    if (item.attributes && item.attributes.passive.length > 0) fields.push({ name: 'Passive', value: getAttributes(item.attributes.passive) });
+    if (item.attributes && item.attributes.primary.length) fields.push({ name: 'Primary', value: getAttributes(item.attributes.primary) });
+    if (item.attributes && item.attributes.secondary.length) fields.push({ name: 'Secondary', value: getAttributes(item.attributes.secondary) });
+    if (item.attributes && item.attributes.passive.length) fields.push({ name: 'Passive', value: getAttributes(item.attributes.passive) });
     if (item.type && item.type.typeName) fields.push({ name: 'Type', value: item.typeName });
     if (item.set) fields.push({ name: 'Set', value: item.set.name });
 
     let embed = { title: item.name };
     embed.color = 0xFF33A2;
     embed.description = description;
-    if (fields.length > 0) embed.fields = fields;
+    if (fields.length) embed.fields = fields;
     embed.thumbnail = { url: `https://blzmedia-a.akamaihd.net/d3/icons/items/large/${item.icon}.png` };
 
     message.channel.send('', {

@@ -9,7 +9,7 @@ io.on('connection', () => {
 
 setInterval(async function(){
     let news = await News.getNewsAdded();
-    if (news.length > 0) io.emit('news', news);
+    if (news.length) io.emit('news', news);
 }, 300000);
 
 io.listen(80);

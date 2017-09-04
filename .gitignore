@@ -1,6 +1,4 @@
 /node_modules
 /data
 /config
-/mysql-docker
-start.sh
 package-lock.json

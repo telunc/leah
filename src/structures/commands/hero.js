@@ -4,7 +4,7 @@ let collectors = new Map();
 
 export default async(tokens, message) => {
 
-    if (tokens.length === 0) return;
+    if (!tokens.length) return;
 
     let battleTag = tokens.shift();
     let heroes = await buildCareer(message, battleTag);
@@ -76,14 +76,14 @@ export default async(tokens, message) => {
     }
 
     let fields = [];
-    if (stats.length > 0) fields.push({name: 'Stats', value: stats, inline: true});
-    if (items.length > 0) fields.push({name: 'Items', value: items, inline: true});
-    if (skills.length > 0) fields.push({name: 'Skills', value: skills, inline: true});
+    if (stats.length) fields.push({name: 'Stats', value: stats, inline: true});
+    if (items.length) fields.push({name: 'Items', value: items, inline: true});
+    if (skills.length) fields.push({name: 'Skills', value: skills, inline: true});
     
     let embed = { title: hero.name };
     embed.color = 0xFF33A2;
     embed.description = description;
-    if (fields.length > 0) embed.fields = fields;
+    if (fields.length) embed.fields = fields;
     embed.thumbnail = { url: 'https://i.pinimg.com/originals/1d/ae/1a/1dae1ad263fbac22a9296014871cb980.png' };
 
     message.channel.send('', {
@@ -119,7 +119,7 @@ async function buildCareer(message, battleTag){
     embed.author = { name: `${user.username}#${user.discriminator}`, icon_url: avatar };
     embed.color = 0xFF33A2;
     embed.description = 'Enter any other key to cancel:';
-    if (fields.length > 0) embed.fields = fields;
+    if (fields.length) embed.fields = fields;
 
     await message.channel.send('', {
         embed: embed
