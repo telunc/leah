@@ -24,7 +24,7 @@ export default async(tokens, message) => {
     if (item.set) fields.push({ name: 'Set', value: item.set.name });
 
     let embed = { title: item.name };
-    embed.color = 0x33A2FF;
+    embed.color = 0xFF33A2;
     embed.description = description;
     if (fields.length > 0) embed.fields = fields;
     embed.thumbnail = { url: `https://blzmedia-a.akamaihd.net/d3/icons/items/large/${item.icon}.png` };

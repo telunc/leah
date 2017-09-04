@@ -1,8 +1,10 @@
 import Guild from '../../modules/guild';
 
 export default async(message) => {
+
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let result = await Guild.getGuildWithId(id);
+    
     if (result) {
         result = result.toJSON();
         if (result.sub_id) {
@@ -19,4 +21,5 @@ export default async(message) => {
         await Guild.setGuild(result);
         message.channel.send('', { embed: { color: 0x33A2FF, title: '**#' + message.channel.name + '** is subscribed!' } });
     }
+
 };

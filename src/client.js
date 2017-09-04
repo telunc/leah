@@ -12,6 +12,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
+    if (message.author.bot) return;
     let tokens = await tokenizer.getTokens(message);
     if (!tokens) return;
     let command = tokens.shift();

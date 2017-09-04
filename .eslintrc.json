@@ -53,6 +53,9 @@
                     "children"
                 ]
             }
+        ],
+        "no-irregular-whitespace": [
+            0
         ]
     }
 }
