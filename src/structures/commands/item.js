@@ -2,6 +2,8 @@ import Item from '../../modules/item';
 
 export default async(tokens, message) => {
 
+    if (tokens.length === 0) return;
+
     let name = tokens.join(' ');
     let item = await Item.getItemWithName(name);
 

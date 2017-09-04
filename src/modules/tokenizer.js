@@ -1,7 +1,7 @@
 import config from 'config';
 import Guild from './guild';
 
-export default class Tokenizer {
+export default class {
 
     static async getPrefix(guildId) {
         let prefix = config.get('discord').prefix;

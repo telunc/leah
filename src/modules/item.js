@@ -1,5 +1,3 @@
-// https://www.d3planner.com/webgl/icons/:id
-
 import rp from 'request-promise';
 import redis from './redis';
 import { compareTwoStrings } from 'string-similarity';
