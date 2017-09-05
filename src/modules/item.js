@@ -30,6 +30,7 @@ export default class {
         items.forEach((item) => {
             if (name && item.name) {
                 item.similarity = compareTwoStrings(name, item.name);
+                if (item.id.includes('_x1')) item.similarity += 0.001;
             } else {
                 item.similarity = 0;
             }
