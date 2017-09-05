@@ -1,4 +1,5 @@
 import prefix from './commands/prefix';
+import help from './commands/help';
 import ping from './commands/ping';
 import news from './commands/news';
 import sub from './commands/sub';
@@ -10,6 +11,9 @@ export default {
 
     'prefix': (tokens, message) => {
         return prefix(tokens, message);
+    },
+    'help': (tokens, message) => {
+        return help(message);
     },
     'ping': (tokens, message) => {
         return ping(message);
