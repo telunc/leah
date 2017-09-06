@@ -24,4 +24,10 @@ export default class {
         return guild.update(post);
     }
 
+    static async deleteGuild(id) {
+        return Guild.destroy({ where: { id: id } }).catch((error) => {
+            console.error(error);
+        });
+    }
+
 }

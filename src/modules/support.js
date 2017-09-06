@@ -1,4 +1,6 @@
 import config from 'config';
+import Guild from './guild';
+
 let log;
 
 export default (client) => {
@@ -10,6 +12,7 @@ export default (client) => {
     });
     client.on('guildDelete', (guild) => {
         if (log) log.send('', { embed: buildEmbed(guild, false) });
+        Guild.deleteGuild(guild.id);
     });
 };
 

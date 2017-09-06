@@ -5,7 +5,7 @@
         "commonjs": true,
         "es6": true
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "extends": ["eslint:recommended"],
     "parserOptions": {
         "ecmaVersion": 2017,
         "ecmaFeatures": {
@@ -14,9 +14,6 @@
         },
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
     "rules": {
         "indent": [
             "error",
@@ -45,14 +42,6 @@
         ],
         "no-cond-assign": [
             0
-        ],
-        "react/prop-types": [
-            "error",
-            {
-                "ignore": [
-                    "children"
-                ]
-            }
         ],
         "no-irregular-whitespace": [
             0
