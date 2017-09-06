@@ -13,9 +13,11 @@
         "prefix": "leah ",
         "clientId": "",
         "clientSecret": "",
-        "token": ""
+        "token": "",
+        "guildLog": ""
     },
     "battle-net": {
+        "secret": "",
         "key": ""
     }
 }
