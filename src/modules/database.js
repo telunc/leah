@@ -23,7 +23,8 @@ sequelize.authenticate().then(() => {
 const Guild = sequelize.define('guild', {
     id: { type: Sequelize.BIGINT, primaryKey: true },
     prefix: { type: Sequelize.STRING },
-    sub_id: { type: Sequelize.BIGINT, unique: true }
+    sub_id: { type: Sequelize.BIGINT, unique: true },
+    region: { type: Sequelize.STRING }
 }, {
     timestamps: false
 });
@@ -37,6 +38,6 @@ const News = sequelize.define('news', {
 });
 
 // sync database
-sequelize.sync({ force: false });
+sequelize.sync({ alter: true });
 
 export { Guild, News };

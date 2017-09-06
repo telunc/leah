@@ -1,11 +1,16 @@
 import Profile from '../../modules/profile';
+import Guild from '../../modules/guild';
 
 export default async(tokens, message) => {
 
     if (!tokens.length) return;
 
     let battleTag = tokens.shift();
-    let career = await Profile.getCareer(battleTag);
+    let id = (message.guild) ? message.guild.id : message.channel.id;
+    let guild = await Guild.getGuildWithId(id);
+    let region = (guild) ? guild.region : 'US';
+
+    let career = await Profile.getCareer(region, battleTag);
     if (!career || career.code) return message.reply('No Result Found');
 
     let description = '';

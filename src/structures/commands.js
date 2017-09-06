@@ -6,6 +6,7 @@ import sub from './commands/sub';
 import item from './commands/item';
 import career from './commands/career';
 import hero from './commands/hero';
+import config from './commands/config';
 
 export default {
 
@@ -32,6 +33,9 @@ export default {
     },
     'hero': (tokens, message) => {
         return hero(tokens, message);
+    },
+    'config': (tokens, message) => {
+        return config(message);
     }
 
 };

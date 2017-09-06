@@ -1,4 +1,5 @@
 import Profile from '../../modules/profile';
+import Guild from '../../modules/guild';
 
 let collectors = new Map();
 
@@ -7,13 +8,17 @@ export default async(tokens, message) => {
     if (!tokens.length) return;
 
     let battleTag = tokens.shift();
-    let heroes = await buildCareer(message, battleTag);
+    let id = (message.guild) ? message.guild.id : message.channel.id;
+    let guild = await Guild.getGuildWithId(id);
+    let region = (guild) ? guild.region : 'US';
+
+    let heroes = await buildCareer(message, region, battleTag);
     if (!heroes) return;
 
     let choice = await collector(message);
     if (!heroes[choice-1]) return message.channel.send({ embed: { title: 'Request cancelled', color: 0xFF33A2 } });
     
-    let hero = await Profile.getHero(battleTag, heroes[choice-1].id);
+    let hero = await Profile.getHero(region, battleTag, heroes[choice-1].id);
     if (!hero) return;
 
     let description = '';
@@ -92,8 +97,8 @@ export default async(tokens, message) => {
 
 };
 
-async function buildCareer(message, battleTag){
-    let career = await Profile.getCareer(battleTag);
+async function buildCareer(message, region, battleTag){
+    let career = await Profile.getCareer(region, battleTag);
     if (!career || career.code) return message.reply('No Result Found');
 
     let user = message.author;

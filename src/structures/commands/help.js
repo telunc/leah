@@ -8,6 +8,7 @@ const help =
 [${name} - v${version}]
 
 sub                     News subscription
+config                  Diablo server region
 news     [1~6]          Latest 1~6 news
 item     [name]         Item detail
 career   [battle tag]   Career profile 
