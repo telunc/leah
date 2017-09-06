@@ -16,9 +16,9 @@ export default async(tokens, message) => {
     if (!heroes) return;
 
     let choice = await collector(message);
-    if (!heroes[choice-1]) return message.channel.send({ embed: { title: 'Request cancelled', color: 0xFF33A2 } });
-    
-    let hero = await Profile.getHero(region, battleTag, heroes[choice-1].id);
+    if (!heroes[choice - 1]) return message.channel.send({ embed: { title: 'Request cancelled', color: 0xFF33A2 } });
+
+    let hero = await Profile.getHero(region, battleTag, heroes[choice - 1].id);
     if (!hero) return;
 
     let description = '';
@@ -63,7 +63,7 @@ export default async(tokens, message) => {
     if (hero.stats.secondaryResource !== 0) stats += `Secondary Resource: ${hero.stats.secondaryResource}\n`;
 
     let skills = '';
-    hero.skills.active.forEach((slot) =>{
+    hero.skills.active.forEach((slot) => {
         if (slot.skill) {
             skills += slot.skill.name;
             if (slot.rune) skills += `: ${slot.rune.name}`;
@@ -71,7 +71,7 @@ export default async(tokens, message) => {
         }
     });
 
-    hero.skills.passive.forEach((slot) =>{
+    hero.skills.passive.forEach((slot) => {
         if (slot.skill) skills += `${slot.skill.name}\n`;
     });
 
@@ -81,10 +81,10 @@ export default async(tokens, message) => {
     }
 
     let fields = [];
-    if (stats.length) fields.push({name: 'Stats', value: stats, inline: true});
-    if (items.length) fields.push({name: 'Items', value: items, inline: true});
-    if (skills.length) fields.push({name: 'Skills', value: skills, inline: true});
-    
+    if (stats.length) fields.push({ name: 'Stats', value: stats, inline: true });
+    if (items.length) fields.push({ name: 'Items', value: items, inline: true });
+    if (skills.length) fields.push({ name: 'Skills', value: skills, inline: true });
+
     let embed = { title: hero.name };
     embed.color = 0xFF33A2;
     embed.description = description;
@@ -97,9 +97,12 @@ export default async(tokens, message) => {
 
 };
 
-async function buildCareer(message, region, battleTag){
+async function buildCareer(message, region, battleTag) {
     let career = await Profile.getCareer(region, battleTag);
-    if (!career || career.code) return message.reply('No Result Found');
+    if (!career || career.code) {
+        message.reply('No Result Found');
+        return;
+    }
 
     let user = message.author;
     let avatar = user.avatar ? (user.avatar.startsWith('a_') ? `​https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif` : `​https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp`) : user.defaultAvatarURL;
@@ -136,14 +139,14 @@ async function buildCareer(message, region, battleTag){
 async function collector(message) {
     return new Promise(async(resolve) => {
         let collector = message.channel.createMessageCollector((m) => { if (m.author === message.author) return m; }, { time: 60000 });
-        
+
         if (!message.member) message.member = message.author;
         collectors.set(message.member.id, { collector: collector });
-    
+
         collector.on('collect', (element, collector) => {
             collector.stop();
         });
-    
+
         collector.on('end', (collected) => {
             collectors.delete(message.member.id);
             if (!collected.size) {
