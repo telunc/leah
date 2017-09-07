@@ -46,7 +46,7 @@ export default class {
     static async getCareer(region, battleTag) {
         let cacheCareer = await redis.getAsync(`career-${region}-${battleTag}`);
         if (cacheCareer) return JSON.parse(cacheCareer);
-        let career = await rp({ uri: `https://${region}.api.battle.net/d3/profile/${battleTag}/?locale=en_US&apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
+        let career = await rp({ uri: `https://${region}.api.battle.net/d3/profile/${battleTag}/?apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
             // console.error(`failed to fetch career with battleTag ${battleTag}`);
         });
         if (!career) return;
@@ -57,7 +57,7 @@ export default class {
     static async getHero(region, battleTag, id) {
         let cacheHero = await redis.getAsync(`${region}-${battleTag}-${id}`);
         if (cacheHero) return JSON.parse(cacheHero);
-        let hero = await rp({ uri: `https://${region}.api.battle.net/d3/profile/${battleTag}/hero/${id}?locale=en_US&apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
+        let hero = await rp({ uri: `https://${region}.api.battle.net/d3/profile/${battleTag}/hero/${id}?apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
             // console.error(`failed to fetch hero with id ${id}`);
         });
         if (!hero) return;

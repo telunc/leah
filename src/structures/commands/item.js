@@ -1,11 +1,16 @@
 import Item from '../../modules/item';
+import Guild from '../../modules/guild';
 
 export default async(tokens, message) => {
 
     if (!tokens.length) return;
 
+    let id = (message.guild) ? message.guild.id : message.channel.id;
+    let guild = await Guild.getGuildWithId(id);
+    let region = (guild) ? guild.region : 'US';
+
     let name = tokens.join(' ');
-    let item = await Item.getItemWithName(name);
+    let item = await Item.getItemWithName(region, name);
     let color = null;
 
     let description = '';

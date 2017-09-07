@@ -17,15 +17,15 @@ export default class {
         return items;
     }
 
-    static async getItemsWithId(id) {
-        let cacheItem = await redis.getAsync(`items-${id}`);
+    static async getItemsWithId(region, id) {
+        let cacheItem = await redis.getAsync(`${region}-items-${id}`);
         if (cacheItem) return JSON.parse(cacheItem);
-        let item = await rp({ uri: `https://us.api.battle.net/d3/data/item/${id}?locale=en_US&apikey=${config.get('battle-net').key}`, json: true });
-        await redis.set(`items-${id}`, JSON.stringify(item), 'EX', 86400);
+        let item = await rp({ uri: `https://${region}.api.battle.net/d3/data/item/${id}?apikey=${config.get('battle-net').key}`, json: true });
+        await redis.set(`${region}-items-${id}`, JSON.stringify(item), 'EX', 86400);
         return item;
     }
 
-    static async getItemWithName(name) {
+    static async getItemWithName(region, name) {
         let items = await this.getItems();
         items.forEach((item) => {
             if (name && item.name) {
@@ -39,7 +39,7 @@ export default class {
         items.sort((a, b) => {
             return b.similarity - a.similarity;
         });
-        return this.getItemsWithId(items[0].id);
+        return this.getItemsWithId(region, items[0].id);
     }
 
 }
