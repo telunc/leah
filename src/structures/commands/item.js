@@ -1,15 +1,20 @@
 import Item from '../../modules/item';
+import Guild from '../../modules/guild';
 
 export default async(tokens, message) => {
 
     if (!tokens.length) return;
+    
+    let id = (message.guild) ? message.guild.id : message.channel.id;
+    let guild = await Guild.getGuildWithId(id);
+    let region = (guild) ? guild.region : 'US';
 
+    
     let name = tokens.join(' ');
-    let item = await Item.getItemWithName(name);
-    let embed = {};
+    let item = await Item.getItemWithName(region, name);
     let color = null;
     let description = '';
-
+    
     description += item.typeName + '\n';
     if (item.requiredLevel) description += `Required Level: ${item.requiredLevel}\n`;
     if (item.itemLevel) description += `Item Level: ${item.itemLevel}\n`;
@@ -30,7 +35,8 @@ export default async(tokens, message) => {
     if (item.attributes && item.attributes.secondary.length) fields.push({ name: 'Secondary', value: getAttributes(item.attributes.secondary) });
     if (item.attributes && item.attributes.passive.length) fields.push({ name: 'Passive', value: getAttributes(item.attributes.passive) });
     if (item.set) fields.push({ name: 'Set', value: item.set.name });
-
+    
+    let embed = {};
     embed.title = item.name;
     embed.color = color;
     embed.description = description;
