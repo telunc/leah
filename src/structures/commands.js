@@ -7,6 +7,8 @@ import item from './commands/item';
 import career from './commands/career';
 import hero from './commands/hero';
 import config from './commands/config';
+import era from './commands/era';
+import season from './commands/season';
 
 export default {
 
@@ -36,6 +38,12 @@ export default {
     },
     'config': (tokens, message) => {
         return config(message);
+    },
+    'era': (tokens, message) => {
+        return era(tokens, message);
+    },
+    'season': (tokens, message) => {
+        return season(tokens, message);
     }
 
 };
