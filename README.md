@@ -8,7 +8,7 @@
 <p align="center">
   <a href="https://discord.gg/yuTxmYn" target="_blank"><img src="https://discordapp.com/api/guilds/354526456812011530/widget.png" alt="Discord"></a>
   <a href="https://david-dm.org/telunc/leah" title="dependencies status"><img src="https://david-dm.org/telunc/leah/status.png"/></a>
-  <a href="https://github.com/telunc/leah/issues" target="_blank"><img src="https://img.shields.io/github/issues/telunc/leah.svg" alt="Github Issues"></a>
+  <a href="https://travis-ci.org/telunc/leah" target="_blank"><img src="https://travis-ci.org/telunc/leah.svg?branch=master"></a>
 </p>
 
 ## Contributing Guideline
