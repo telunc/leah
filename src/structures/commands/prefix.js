@@ -3,7 +3,13 @@ import Guild from '../../modules/guild';
 export default async(tokens, message) => {
 
     let prefix = tokens.shift();
-    if (!prefix) prefix = null;
+    if (!prefix) return message.channel.send('', {
+        embed: {
+            title: 'Help: Prefix',
+            description: 'To use this command, please supply a new prefix\nFor example, `leah prefix ?`',
+            color: 0x33A2FF
+        }
+    });
 
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let result = await Guild.getGuildWithId(id);

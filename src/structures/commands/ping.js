@@ -6,5 +6,5 @@ export default (message) => {
         let diff = (message.createdTimestamp - start);
         message.edit(`Leah responded in *${diff/1000} seconds*`);
     }).catch((error) => console.log(error));
-    
+
 };

@@ -5,9 +5,15 @@ let collectors = new Map();
 
 export default async(tokens, message) => {
 
-    if (!tokens.length) return;
+    if (!tokens.length) return message.channel.send('', {
+        embed: {
+            title: 'Help: Hero',
+            description: 'To use this command, please supply a BattleTag\nFor example, `leah hero user-1234`',
+            color: 0xFF33A2
+        }
+    });
 
-    let battleTag = tokens.shift();
+    let battleTag = tokens.shift().replace('#', '-');
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let guild = await Guild.getGuildWithId(id);
     let region = (guild) ? guild.region : 'US';

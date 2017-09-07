@@ -16,17 +16,17 @@ export default async(message) => {
 
     message.channel.send('', { embed: buildEmbed(message) });
     let choice = await collector(message);
-    if (!regions[choice-1]) return message.channel.send({ embed: { title: 'Request cancelled', color: 0x33A2FF } });
+    if (!regions[choice - 1]) return message.channel.send({ embed: { title: 'Request cancelled', color: 0x33A2FF } });
 
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let result = await Guild.getGuildWithId(id);
 
     if (result) {
         result = result.toJSON();
-        result.region = regions[choice-1].short;
+        result.region = regions[choice - 1].short;
         await Guild.updateGuild(id, result);
     } else {
-        result = { id: id, region: regions[choice-1].short };
+        result = { id: id, region: regions[choice - 1].short };
         await Guild.setGuild(result);
     }
 

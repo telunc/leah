@@ -23,7 +23,7 @@ sequelize.authenticate().then(() => {
 const Guild = sequelize.define('guild', {
     id: { type: Sequelize.BIGINT, primaryKey: true },
     prefix: { type: Sequelize.STRING },
-    sub_id: { type: Sequelize.BIGINT, unique: true },
+    sub_id: { type: Sequelize.BIGINT },
     region: { type: Sequelize.STRING }
 }, {
     timestamps: false
@@ -31,7 +31,7 @@ const Guild = sequelize.define('guild', {
 
 const News = sequelize.define('news', {
     id: { type: Sequelize.BIGINT, autoIncrement: true, primaryKey: true },
-    uri: { type: Sequelize.STRING, unique: true },
+    uri: { type: Sequelize.STRING },
     image: { type: Sequelize.STRING },
     title: { type: Sequelize.STRING },
     description: { type: Sequelize.TEXT }

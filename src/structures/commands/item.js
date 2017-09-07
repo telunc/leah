@@ -3,7 +3,13 @@ import Guild from '../../modules/guild';
 
 export default async(tokens, message) => {
 
-    if (!tokens.length) return;
+    if (!tokens.length) return message.channel.send('', {
+        embed: {
+            title: 'Help: Item',
+            description: 'To use this command, please supply an item name\nFor example, `leah item hellcat waistguard`',
+            color: 0xFF33A2
+        }
+    });
 
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let guild = await Guild.getGuildWithId(id);

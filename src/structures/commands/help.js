@@ -4,19 +4,20 @@ const version = project.version;
 const name = capitalizeFirstLetter(project.name);
 
 const help =
-`\`\`\`css
+    `\`\`\`css
 [${name} - v${version}]
 
-sub                     News subscription
-config                  Diablo server region
-news     [1~6]          Latest 1~6 news
-item     [name]         Item detail
-career   [battle tag]   Career profile 
-hero     [battle tag]   Hero profile
-ping                    ${name} latency
-prefix   [new prefix]   Change prefix
-prefix                  Reset to default prefix
-help                    Show this message
+sub    : News subscription
+config : Diablo server region
+news   : Specifc news
+item   : Item detail
+career : Career profile 
+hero   : Hero profile
+season : Seasonal Leaderboard Rank
+era    : Era Leaderboard Rank
+ping   : ${name} latency
+prefix : Change prefix
+help   : Show this message
 \`\`\`
 
 **Website:**

@@ -8,7 +8,9 @@ export default class {
 
     static async scrapeNews() {
         try {
-            return await rp({ url: 'https://us.battle.net/d3/en/' });
+            return await rp({ url: 'https://us.battle.net/d3/en/' }).catch(() => {
+                console.error('failed to fetch news');
+            });
         } catch (error) {
             console.error('failed to fetch rss', error);
         }
@@ -16,6 +18,7 @@ export default class {
 
     static async getNews() {
         let body = await this.scrapeNews();
+        if (!body) return;
         let match;
         let news = [];
         while (match = news_regex.exec(body)) {
@@ -35,24 +38,23 @@ export default class {
         return results[index];
     }
 
-    static async setNews(post){
-        let result = await News.findOne({ where: {uri: post.uri} });
-        // console.log(result);
+    static async setNews(post) {
+        let result = await News.findOne({ where: { uri: post.uri } });
         if (result) return;
-        let news = await News.create(post).catch(()=>{
+        let news = await News.create(post).catch(() => {
             // console.error('failed to insert');
         });
         return news.dataValues;
     }
 
-    static async getNewsAdded(){
+    static async getNewsAdded() {
         let news = await this.getNews();
         let promises = [];
         news.forEach((post) => {
             promises.push(this.setNews(post));
         });
         let added = await Promise.all(promises);
-        return added.filter(function (post) { return post; });
+        return added.filter(function(post) { return post; });
     }
 
 }
