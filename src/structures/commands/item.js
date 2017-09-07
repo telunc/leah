@@ -15,7 +15,7 @@ export default async(tokens, message) => {
     let color = null;
     let description = '';
     
-    description += item.typeName + '\n';
+    if (item.typeName) description += item.typeName + '\n';
     if (item.requiredLevel) description += `Required Level: ${item.requiredLevel}\n`;
     if (item.itemLevel) description += `Item Level: ${item.itemLevel}\n`;
     if (item.description) description += `${item.description}\n`;
