@@ -25,12 +25,12 @@
 4. For Linux, please have `build-essential` and `python 2.7` installed
 5. Clone the directory. `git clone https://github.com/telunc/leah.git`
 6. Install dependencies with `npm install`
-7. Create production.json in /config folder. Please reference to default.json.
+7. Create production.json in /config folder. Please refer to default.json.
 8. Launch MySQL and Redis servers
 9. Start Leah with `npm start`
 
 #### Docker
 1. Clone the directory. `git clone https://github.com/telunc/leah.git`
-2. Create production.json in /config folder. Please reference to default.json.
+2. Create production.json in /config folder. Please refer to default.json.
 3. Install <a href="https://www.docker.com/">Docker</a>
 4. Start Leah `sh start.sh`
