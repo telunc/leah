@@ -18,7 +18,7 @@ export default class {
     }
 
     static async getEra(region, era) {
-        let cacheEra = await redis.getAsync(`era-${era}`);
+        let cacheEra = await redis.getAsync(`era-${region}-${era}`);
         if (cacheEra) return JSON.parse(cacheEra);
         let token = await this.getToken();
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/era/${era}?access_token=${token}`, json: true }).catch(() => {
@@ -26,7 +26,7 @@ export default class {
         });
         if (!result) return;
         let leaderboards = buildLeaderboard(result);
-        await redis.set(`era-${era}`, JSON.stringify(leaderboards), 'EX', 86400);
+        await redis.set(`era-${region}-${era}`, JSON.stringify(leaderboards), 'EX', 86400);
         return leaderboards;
     }
 
