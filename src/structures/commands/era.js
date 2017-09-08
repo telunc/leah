@@ -63,7 +63,7 @@ function buildLeaderboards(message, leaderboards) {
     let embed = {};
     embed.author = { name: `${user.username}#${user.discriminator}`, icon_url: avatar };
     embed.color = 0xFF33A2;
-    embed.description = 'Enter any other key to cancel:';
+    embed.description = 'Enter a number or any other key to cancel:';
     if (fields.length) embed.fields = fields;
 
     return embed;
