@@ -19,7 +19,7 @@ export default async(tokens, message) => {
 
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let guild = await Guild.getGuildWithId(id);
-    let region = (guild) ? guild.region : 'US';
+    let region = (guild && guild.region) ? guild.region : 'US';
 
     let leaderboards = await Profile.getEra(region, era);
     if (!leaderboards) return message.channel.send('', { embed: { title: `Unable to find era leaderboards for era ${era}`, color: 0xFF33A2 } });

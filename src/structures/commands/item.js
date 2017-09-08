@@ -13,7 +13,7 @@ export default async(tokens, message) => {
 
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let guild = await Guild.getGuildWithId(id);
-    let region = (guild) ? guild.region : 'US';
+    let region = (guild && guild.region) ? guild.region : 'US';
 
 
     let name = tokens.join(' ');

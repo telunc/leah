@@ -14,7 +14,7 @@ export default async(tokens, message) => {
     let battleTag = tokens.shift().replace('#', '-');
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let guild = await Guild.getGuildWithId(id);
-    let region = (guild) ? guild.region : 'US';
+    let region = (guild && guild.region) ? guild.region : 'US';
 
     let career = await Profile.getCareer(region, battleTag);
     if (!career || career.code) return message.reply('No Result Found');
