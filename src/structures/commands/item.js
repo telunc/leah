@@ -18,6 +18,7 @@ export default async(tokens, message) => {
 
     let name = tokens.join(' ');
     let item = await Item.getItemWithName(region, name);
+    if (!item) message.reply('', { embed: { title: 'No Result Found' } });
     let color = null;
     let description = '';
 

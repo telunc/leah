@@ -11,6 +11,7 @@ export default class {
         let results = await rp({ uri: 'http://ptr.d3planner.com/game/json/items', gzip: true, json: true }).catch(() => {
             console.error('failed to items');
         });
+        if (!results) return;
         let items = Object.keys(results).map((item) => {
             results[item].id = item;
             return results[item];
@@ -25,6 +26,7 @@ export default class {
         let item = await rp({ uri: `https://${region}.api.battle.net/d3/data/item/${id}?apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
             console.error(`failed to items with id ${id} in ${region} region`);
         });
+        if (!item) return;
         await redis.set(`${region}-items-${id}`, JSON.stringify(item), 'EX', 86400);
         return item;
     }
