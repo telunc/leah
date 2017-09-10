@@ -19,7 +19,7 @@ client.on('message', async message => {
     let tokens = await tokenizer.getTokens(message);
     if (!tokens) return;
     let command = tokens.shift();
-    if (commands.hasOwnProperty(command)) commands[command](tokens, message);
+    if (commands.hasOwnProperty(command)) commands[command](tokens, message, client);
 });
 
 client.login(config.get('discord').token);

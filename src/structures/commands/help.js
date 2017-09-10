@@ -17,6 +17,7 @@ season : Seasonal Leaderboard Rank
 era    : Era Leaderboard Rank
 ping   : ${name} latency
 prefix : Change prefix
+about  : About ${name}
 help   : Show this message
 \`\`\`
 
