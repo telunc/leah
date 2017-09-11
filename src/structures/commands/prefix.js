@@ -2,11 +2,11 @@ import Guild from '../../modules/guild';
 
 export default async(tokens, message) => {
 
-    let prefix = tokens.shift();
+    let prefix = tokens.join(' ').replace(/[{}]/g, '');
     if (!prefix) return message.channel.send('', {
         embed: {
             title: 'Help: Prefix',
-            description: 'To use this command, please supply a new prefix\nFor example, `leah prefix ?`',
+            description: 'To use this command, please supply a new prefix\nFor example, `leah prefix ?`\nYou may also put prefix in curly braces.\nFor example, `leah prefix {Leah }`',
             color: 0x33A2FF
         }
     });
