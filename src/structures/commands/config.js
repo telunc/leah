@@ -10,10 +10,6 @@ let regions = [
 
 export default async(message) => {
 
-    let isAdmin = (message.member) ? message.member.hasPermission('ADMINISTRATOR') : true;
-    if (!isAdmin) return message.channel.send('', { embed: { color: 0x33A2FF, title: 'This command is for administrators only' } });
-
-
     message.channel.send('', { embed: buildEmbed(message) });
     let choice = await collector(message);
     if (!regions[choice - 1]) return message.channel.send({ embed: { title: 'Request cancelled', color: 0x33A2FF } });
