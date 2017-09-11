@@ -2,9 +2,6 @@ import Guild from '../../modules/guild';
 
 export default async(tokens, message) => {
 
-    let isAdmin = (message.member) ? message.member.hasPermission('ADMINISTRATOR') : true;
-    if (!isAdmin) return message.channel.send('', { embed: { color: 0x33A2FF, title: 'This command is for administrators only' } });
-
     let prefix = tokens.shift();
     if (!prefix) return message.channel.send('', {
         embed: {
@@ -13,6 +10,9 @@ export default async(tokens, message) => {
             color: 0x33A2FF
         }
     });
+
+    let isAdmin = (message.member) ? message.member.hasPermission('ADMINISTRATOR') : true;
+    if (!isAdmin) return message.channel.send('', { embed: { color: 0x33A2FF, title: 'This command is for administrators only' } });
 
     let id = (message.guild) ? message.guild.id : message.channel.id;
     let result = await Guild.getGuildWithId(id);
