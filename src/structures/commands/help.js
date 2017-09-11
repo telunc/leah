@@ -18,6 +18,7 @@ era    : Era Leaderboard Rank
 ping   : ${name} latency
 prefix : Change prefix
 about  : About ${name}
+reset  : Reset guild configuration
 help   : Show this message
 \`\`\`
 

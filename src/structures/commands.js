@@ -1,6 +1,7 @@
 import prefix from './commands/prefix';
 import about from './commands/about';
 import help from './commands/help';
+import reset from './commands/reset';
 import ping from './commands/ping';
 import news from './commands/news';
 import sub from './commands/sub';
@@ -21,6 +22,9 @@ export default {
     },
     'help': (tokens, message) => {
         return help(message);
+    },
+    'reset': (tokens, message) => {
+        return reset(message);
     },
     'ping': (tokens, message) => {
         return ping(message);
