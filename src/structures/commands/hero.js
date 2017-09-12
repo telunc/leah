@@ -8,15 +8,13 @@ export default async(tokens, message) => {
     if (!tokens.length) return message.channel.send('', {
         embed: {
             title: 'Help: Hero',
-            description: 'To use this command, please supply a BattleTag\nFor example, `leah hero user-1234`',
+            description: 'To use this command, please supply a BattleTag\nFor example, `leah hero user-1234`\n\nYou may also put a region code to specify your battle.net region.\nFor example, `leah hero user-1234 US`',
             color: 0xFF33A2
         }
     });
 
     let battleTag = tokens.shift().replace('#', '-');
-    let id = (message.guild) ? message.guild.id : message.channel.id;
-    let guild = await Guild.getGuildWithId(id);
-    let region = (guild && guild.region) ? guild.region : 'US';
+    let region = await getRegion(tokens.shift(), message);
 
     let heroes = await buildCareer(message, region, battleTag);
     if (!heroes) return;
@@ -162,6 +160,14 @@ async function collector(message) {
             resolve(content);
         });
     });
+}
+
+async function getRegion(region, message) {
+    if (region && ['US', 'TW', 'KR', 'EU'].includes(region.toUpperCase())) return region;
+    let id = (message.guild) ? message.guild.id : message.channel.id;
+    let guild = await Guild.getGuildWithId(id);
+    region = (guild && guild.region) ? guild.region : 'US';
+    return region;
 }
 
 function capitalizeFirstLetter(string) {

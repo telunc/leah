@@ -6,17 +6,12 @@ export default async(tokens, message) => {
     if (!tokens.length) return message.channel.send('', {
         embed: {
             title: 'Help: Item',
-            description: 'To use this command, please supply an item name\nFor example, `leah item hellcat waistguard`',
+            description: 'To use this command, please supply an item name\nFor example, `leah item hellcat waistguard`\n\nYou may also put a region code to specify your battle.net region.\nFor example, `leah item hellcat waistguard US`',
             color: 0xFF33A2
         }
     });
 
-    let id = (message.guild) ? message.guild.id : message.channel.id;
-    let guild = await Guild.getGuildWithId(id);
-    let region = (guild && guild.region) ? guild.region : 'US';
-
-
-    let name = tokens.join(' ');
+    let [region, name] = await getRegion(tokens.pop(), tokens, message);
     let item = await Item.getItemWithName(region, name);
     if (!item) message.reply('', { embed: { title: 'No Result Found' } });
     let color = null;
@@ -58,6 +53,15 @@ export default async(tokens, message) => {
     });
 
 };
+
+async function getRegion(region, tokens, message) {
+    if (region && ['US', 'TW', 'KR', 'EU'].includes(region.toUpperCase())) return [region, tokens.join(' ')];
+    let id = (message.guild) ? message.guild.id : message.channel.id;
+    let guild = await Guild.getGuildWithId(id);
+    if (region) tokens.push(region);
+    region = (guild && guild.region) ? guild.region : 'US';
+    return [region, tokens.join(' ')];
+}
 
 function getAttributes(attributes) {
     let description = '';
