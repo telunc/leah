@@ -15,8 +15,8 @@ set    : Item set detail
 skill  : Hero ability
 career : Career profile 
 hero   : Hero profile
-season : Seasonal Leaderboard Rank
-era    : Era Leaderboard Rank
+season : Seasonal leaderboard rank
+era    : Era leaderboard rank
 ping   : ${name} latency
 prefix : Change prefix
 about  : About ${name}
