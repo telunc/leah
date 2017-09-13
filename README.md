@@ -33,4 +33,4 @@
 1. Clone the directory. `git clone https://github.com/telunc/leah.git`
 2. Create production.json in /config folder. Please refer to default.json.
 3. Install <a href="https://www.docker.com/">Docker</a>
-4. Start Leah `sh start.sh`
+4. Start Leah with `sh start.sh`
