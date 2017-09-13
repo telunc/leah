@@ -35,6 +35,7 @@ export default class {
 
     static async getNewsWithIndex(index) {
         let results = await this.getNews();
+        if (!results) return;
         return results[index];
     }
 
@@ -49,6 +50,7 @@ export default class {
 
     static async getNewsAdded() {
         let news = await this.getNews();
+        if (!news) return;
         let promises = [];
         news.forEach((post) => {
             promises.push(this.setNews(post));

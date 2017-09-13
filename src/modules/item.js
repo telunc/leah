@@ -9,7 +9,7 @@ export default class {
         let cacheItems = await redis.getAsync('items');
         if (cacheItems) return JSON.parse(cacheItems);
         let results = await rp({ uri: 'http://ptr.d3planner.com/game/json/items', gzip: true, json: true }).catch(() => {
-            console.error('failed to items');
+            console.error('failed to load items');
         });
         if (!results) return;
         let items = Object.keys(results).map((item) => {
@@ -33,6 +33,7 @@ export default class {
 
     static async getItemWithName(region, name) {
         let items = await this.getItems();
+        if (!items) return;
         items.forEach((item) => {
             if (name && item.name) {
                 item.similarity = compareTwoStrings(name, item.name);

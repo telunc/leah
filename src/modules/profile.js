@@ -21,6 +21,7 @@ export default class {
         let cacheEra = await redis.getAsync(`era-${region}-${era}`);
         if (cacheEra) return JSON.parse(cacheEra);
         let token = await this.getToken(region);
+        if (!token) return;
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/era/${era}?access_token=${token}`, json: true }).catch(() => {
             // console.error('failed to fetch era index');
         });
@@ -34,6 +35,7 @@ export default class {
         let cacheLeaderboard = await redis.getAsync(`era-${region}-${leaderboard}`);
         if (cacheLeaderboard) return JSON.parse(cacheLeaderboard);
         let token = await this.getToken(region);
+        if (!token) return;
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/era/${era}/leaderboard/${leaderboard}?access_token=${token}`, json: true }).catch((error) => {
             console.error('failed to fetch era leaderboard', error);
         });
@@ -46,6 +48,7 @@ export default class {
         let cacheSeason = await redis.getAsync(`season-${region}-${season}`);
         if (cacheSeason) return JSON.parse(cacheSeason);
         let token = await this.getToken(region);
+        if (!token) return;
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/season/${season}?access_token=${token}`, json: true }).catch(() => {
             // console.error('failed to fetch season index');
         });
@@ -59,6 +62,7 @@ export default class {
         let cacheLeaderboard = await redis.getAsync(`season-${region}-${leaderboard}`);
         if (cacheLeaderboard) return JSON.parse(cacheLeaderboard);
         let token = await this.getToken(region);
+        if (!token) return;
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/season/${season}/leaderboard/${leaderboard}?access_token=${token}`, json: true }).catch((error) => {
             console.error('failed to fetch season leaderboard', error);
         });

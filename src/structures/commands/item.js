@@ -22,9 +22,9 @@ export default async(tokens, message) => {
     if (item.itemLevel) description += `Item Level: ${item.itemLevel}\n`;
     if (item.description) description += `${item.description}\n`;
     if (item.displayColor) description += `Rarity: ${capitalizeFirstLetter(item.displayColor)}\n`;
-    if (item.displayColor === 'orange') color = 0xff9433;
-    if (item.displayColor === 'blue') color = 0x3349ff;
-    if (item.displayColor === 'green') color = 0x33ff3d;
+    if (item.displayColor === 'orange') color = 0xFF9433;
+    if (item.displayColor === 'blue') color = 0x3349FF;
+    if (item.displayColor === 'green') color = 0x33FF3D;
     if (item.dps && item.dps.min && item.dps.max) description += `Damage Per Second: ${item.dps.min.toFixed(2)}-${item.dps.max.toFixed(2)}\n`;
     if (item.damageRange && item.damageRange !== '0–0 Damage') description += `Damage: ${item.damageRange.replace(' Damage','')}\n`;
     if (item.damageRange && item.attacksPerSecondText) description += `Attacks per Second: ${item.attacksPerSecondText.replace(' Attacks per Second','')}\n`;
