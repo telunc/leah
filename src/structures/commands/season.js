@@ -16,10 +16,8 @@ export default async(tokens, message) => {
 
     let season = tokens.shift();
     let battleTag = tokens.shift().replace('#', '-');
-
-    let id = (message.guild) ? message.guild.id : message.channel.id;
-    let guild = await Guild.getGuildWithId(id);
-    let region = (guild && guild.region) ? guild.region : 'US';
+    let region = await getRegion(tokens.shift(), message);
+    console.log(region);
 
     let leaderboards = await Profile.getSeason(region, season);
     if (!leaderboards) return message.channel.send('', { embed: { title: `Unable to find seasonal leaderboards for season ${season}`, color: 0xFF33A2 } });
@@ -89,4 +87,12 @@ async function collector(message) {
             resolve(content);
         });
     });
+}
+
+async function getRegion(region, message) {
+    if (region && ['US', 'TW', 'KR', 'EU'].includes(region.toUpperCase())) return region;
+    let id = (message.guild) ? message.guild.id : message.channel.id;
+    let guild = await Guild.getGuildWithId(id);
+    region = (guild && guild.region) ? guild.region : 'US';
+    return region;
 }

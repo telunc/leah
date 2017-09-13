@@ -16,10 +16,7 @@ export default async(tokens, message) => {
 
     let era = tokens.shift();
     let battleTag = tokens.shift().replace('#', '-');
-
-    let id = (message.guild) ? message.guild.id : message.channel.id;
-    let guild = await Guild.getGuildWithId(id);
-    let region = (guild && guild.region) ? guild.region : 'US';
+    let region = await getRegion(tokens.shift(), message);
 
     let leaderboards = await Profile.getEra(region, era);
     if (!leaderboards) return message.channel.send('', { embed: { title: `Unable to find era leaderboards for era ${era}`, color: 0xFF33A2 } });
@@ -89,4 +86,12 @@ async function collector(message) {
             resolve(content);
         });
     });
+}
+
+async function getRegion(region, message) {
+    if (region && ['US', 'TW', 'KR', 'EU'].includes(region.toUpperCase())) return region;
+    let id = (message.guild) ? message.guild.id : message.channel.id;
+    let guild = await Guild.getGuildWithId(id);
+    region = (guild && guild.region) ? guild.region : 'US';
+    return region;
 }

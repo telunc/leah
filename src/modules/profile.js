@@ -2,25 +2,25 @@ import rp from 'request-promise';
 import redis from './redis';
 import config from 'config';
 
-let regex = /https:\/\/us.api.battle.net\/data\/d3\/([^/]*)\/([^/]*)\/leaderboard\/([^?]*)/;
+let regex = /battle.net\/data\/d3\/([^/]*)\/([^/]*)\/leaderboard\/([^?]*)/;
 
 export default class {
 
-    static async getToken() {
-        let cacheToken = await redis.getAsync('token');
+    static async getToken(region) {
+        let cacheToken = await redis.getAsync(`${region}-token`);
         if (cacheToken) return cacheToken;
-        let result = await rp({ uri: `https://us.battle.net/oauth/token?grant_type=client_credentials&client_id=${config.get('battle-net').key}&client_secret=${config.get('battle-net').secret}`, json: true }).catch((error) => {
+        let result = await rp({ uri: `https://${region}.battle.net/oauth/token?grant_type=client_credentials&client_id=${config.get('battle-net').key}&client_secret=${config.get('battle-net').secret}`, json: true }).catch((error) => {
             console.error('failed to fetch access token', error);
         });
         if (!result) return;
-        await redis.set('token', result.access_token, 'EX', result.expires_in);
+        await redis.set(`${region}-token`, result.access_token, 'EX', result.expires_in);
         return result.access_token;
     }
 
     static async getEra(region, era) {
         let cacheEra = await redis.getAsync(`era-${region}-${era}`);
         if (cacheEra) return JSON.parse(cacheEra);
-        let token = await this.getToken();
+        let token = await this.getToken(region);
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/era/${era}?access_token=${token}`, json: true }).catch(() => {
             // console.error('failed to fetch era index');
         });
@@ -33,7 +33,7 @@ export default class {
     static async getEraLeaderboard(region, era, leaderboard) {
         let cacheLeaderboard = await redis.getAsync(`era-${region}-${leaderboard}`);
         if (cacheLeaderboard) return JSON.parse(cacheLeaderboard);
-        let token = await this.getToken();
+        let token = await this.getToken(region);
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/era/${era}/leaderboard/${leaderboard}?access_token=${token}`, json: true }).catch((error) => {
             console.error('failed to fetch era leaderboard', error);
         });
@@ -45,7 +45,7 @@ export default class {
     static async getSeason(region, season) {
         let cacheSeason = await redis.getAsync(`season-${region}-${season}`);
         if (cacheSeason) return JSON.parse(cacheSeason);
-        let token = await this.getToken();
+        let token = await this.getToken(region);
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/season/${season}?access_token=${token}`, json: true }).catch(() => {
             // console.error('failed to fetch season index');
         });
@@ -58,7 +58,7 @@ export default class {
     static async getSeasonLeaderboard(region, season, leaderboard) {
         let cacheLeaderboard = await redis.getAsync(`season-${region}-${leaderboard}`);
         if (cacheLeaderboard) return JSON.parse(cacheLeaderboard);
-        let token = await this.getToken();
+        let token = await this.getToken(region);
         let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/season/${season}/leaderboard/${leaderboard}?access_token=${token}`, json: true }).catch((error) => {
             console.error('failed to fetch season leaderboard', error);
         });
