@@ -11,6 +11,8 @@ sub    : News subscription
 config : Diablo server region
 news   : Specifc news
 item   : Item detail
+set    : Item set detail
+skill  : Hero ability
 career : Career profile 
 hero   : Hero profile
 season : Seasonal Leaderboard Rank
