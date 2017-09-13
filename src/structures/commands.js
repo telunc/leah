@@ -12,6 +12,8 @@ import config from './commands/config';
 import era from './commands/era';
 import season from './commands/season';
 import weekly from './commands/weekly';
+import set from './commands/set';
+import skill from './commands/skill';
 
 export default {
 
@@ -56,6 +58,12 @@ export default {
     },
     'weekly': (tokens, message) => {
         return weekly(message);
+    },
+    'set': (tokens, message) => {
+        return set(tokens, message);
+    },
+    'skill': (tokens, message) => {
+        return skill(tokens, message);
     }
 
 };
