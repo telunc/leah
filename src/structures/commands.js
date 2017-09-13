@@ -11,6 +11,7 @@ import hero from './commands/hero';
 import config from './commands/config';
 import era from './commands/era';
 import season from './commands/season';
+import weekly from './commands/weekly';
 
 export default {
 
@@ -52,6 +53,9 @@ export default {
     },
     'season': (tokens, message) => {
         return season(tokens, message);
+    },
+    'weekly': (tokens, message) => {
+        return weekly(message);
     }
 
 };
