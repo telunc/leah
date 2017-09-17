@@ -13,6 +13,7 @@ news   : Specifc news
 item   : Item detail
 set    : Item set detail
 skill  : Hero ability
+cost   : Legendary item cost
 career : Career profile 
 hero   : Hero profile
 season : Seasonal leaderboard rank

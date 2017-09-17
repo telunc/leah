@@ -14,6 +14,7 @@ import season from './commands/season';
 import weekly from './commands/weekly';
 import set from './commands/set';
 import skill from './commands/skill';
+import cost from './commands/cost';
 
 export default {
 
@@ -64,6 +65,9 @@ export default {
     },
     'skill': (tokens, message) => {
         return skill(tokens, message);
+    },
+    'cost': (tokens, message) => {
+        return cost(tokens, message);
     }
 
 };
