@@ -16,7 +16,7 @@
 	"dependencies": {
 		"bufferutil": "^3.0.2",
 		"config": "^1.26.2",
-		"discord.js": "github:hydrabolt/discord.js#cc8060c",
+		"discord.js": "github:telunc/discord.js#52fea8d",
 		"erlpack": "github:hammerandchisel/erlpack",
 		"html-entities": "^1.2.1",
 		"libsodium-wrappers": "^0.5.2",

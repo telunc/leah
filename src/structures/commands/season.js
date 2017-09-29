@@ -17,7 +17,6 @@ export default async(tokens, message) => {
     let season = tokens.shift();
     let battleTag = tokens.shift().replace('#', '-');
     let region = await getRegion(tokens.shift(), message);
-    console.log(region);
 
     let leaderboards = await Profile.getSeason(region, season);
     if (!leaderboards) return message.channel.send('', { embed: { title: `Unable to find seasonal leaderboards for season ${season}`, color: 0xFF33A2 } });
