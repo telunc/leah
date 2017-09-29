@@ -10,7 +10,6 @@ export default async(message, client) => {
             description: `${client.user.username} is a project I made to give back the community. Thanks for all the love and support!`,
             author: {
                 name: `${client.user.username}`,
-                icon_url: 'http://leah.moe/image/leah.jpg',
                 url: 'http://leah.moe'
             },
             fields: await buildBotInfo(client),
