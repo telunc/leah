@@ -1,17 +1,21 @@
 import rp from 'request-promise';
 import redis from './redis';
 import { compareTwoStrings } from 'string-similarity';
+import version from './version';
 
 export default class {
 
     static async getKadala() {
         let cache = await redis.getAsync('kadala');
         if (cache) return JSON.parse(cache);
-        let script = await rp({ uri: 'http://d3planner.com/game/json/kadala', gzip: true }).catch(() => {
+        let build = await version.getVersion().catch(() => {
+            console.error('failed to load version');
+        });
+        let script = await rp({ uri: `http://d3planner.com/api/${build}/kadala`, gzip: true }).catch(() => {
             console.error('failed to load kadala items');
         });
         if (!script) return;
-        script += 'module.exports = Kadala;';
+        script = 'var Kadala =' + script+'module.exports = Kadala;';
         let kadala = eval(script);
         if (!kadala.Items) return;
         let items = Object.keys(kadala.Items).map((item) => {

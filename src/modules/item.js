@@ -1,19 +1,24 @@
 import rp from 'request-promise';
 import redis from './redis';
+import version from './version';
 import { compareTwoStrings } from 'string-similarity';
 import config from 'config';
+import slugify from 'slugify';
 
 export default class {
 
     static async getItems() {
         let cacheItems = await redis.getAsync('items');
         if (cacheItems) return JSON.parse(cacheItems);
-        let results = await rp({ uri: 'http://ptr.d3planner.com/game/json/items', gzip: true, json: true }).catch(() => {
+        let build = await version.getVersion().catch(() => {
+            console.error('failed to load version');
+        });
+        let results = await rp({ uri: `http://ptr.d3planner.com/api/${build}/items`, gzip: true, json: true }).catch(() => {
             console.error('failed to load items');
         });
         if (!results) return;
         let items = Object.keys(results).map((item) => {
-            results[item].id = item;
+            results[item].id = `${slugify(results[item].name, {lower: true})}-${item}`;
             return results[item];
         });
         await redis.set('items', JSON.stringify(items), 'EX', 86400);

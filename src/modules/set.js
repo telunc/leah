@@ -1,13 +1,17 @@
 import rp from 'request-promise';
 import redis from './redis';
 import { compareTwoStrings } from 'string-similarity';
+import version from './version';
 
 export default class {
 
     static async getSets() {
         let cacheSet = await redis.getAsync('sets');
         if (cacheSet) return JSON.parse(cacheSet);
-        let results = await rp({ uri: 'http://d3planner.com/game/json/itemsets', gzip: true, json: true }).catch(() => {
+        let build = await version.getVersion().catch(() => {
+            console.error('failed to load version');
+        });
+        let results = await rp({ uri: `http://d3planner.com/api/${build}/itemsets`, gzip: true, json: true }).catch(() => {
             console.error('failed to load sets');
         });
         if (!results) return;
