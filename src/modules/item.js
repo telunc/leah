@@ -8,7 +8,7 @@ import slugify from 'slugify';
 export default class {
 
     static async getItems() {
-        let cacheItems = await redis.getAsync('items');
+        let cacheItems = await redis.getAsync('leah-items');
         if (cacheItems) return JSON.parse(cacheItems);
         let build = await version.getVersion().catch(() => {
             console.error('failed to load version');
@@ -21,18 +21,18 @@ export default class {
             results[item].id = `${slugify(results[item].name, {lower: true})}-${item}`;
             return results[item];
         });
-        await redis.set('items', JSON.stringify(items), 'EX', 86400);
+        await redis.set('leah-items', JSON.stringify(items), 'EX', 86400);
         return items;
     }
 
     static async getItemsWithId(region, id) {
-        let cacheItem = await redis.getAsync(`${region}-items-${id}`);
+        let cacheItem = await redis.getAsync(`leah-${region}-items-${id}`);
         if (cacheItem) return JSON.parse(cacheItem);
         let item = await rp({ uri: `https://${region}.api.battle.net/d3/data/item/${id}?apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
             console.error(`failed to items with id ${id} in ${region} region`);
         });
         if (!item) return;
-        await redis.set(`${region}-items-${id}`, JSON.stringify(item), 'EX', 86400);
+        await redis.set(`leah-${region}-items-${id}`, JSON.stringify(item), 'EX', 86400);
         return item;
     }
 

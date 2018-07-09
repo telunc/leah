@@ -5,7 +5,7 @@ import { compareTwoStrings } from 'string-similarity';
 export default class {
 
     static async getSkills() {
-        let cacheSkills = await redis.getAsync('skills');
+        let cacheSkills = await redis.getAsync('leah-skills');
         if (cacheSkills) return JSON.parse(cacheSkills);
         let results = await rp({ uri: 'http://d3planner.com/game/json/powers', gzip: true, json: true }).catch(() => {
             console.error('failed to load skills');
@@ -15,7 +15,7 @@ export default class {
             results[skill].id = skill;
             return results[skill];
         });
-        await redis.set('skills', JSON.stringify(skills), 'EX', 86400);
+        await redis.set('leah-skills', JSON.stringify(skills), 'EX', 86400);
         return skills;
     }
 

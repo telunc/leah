@@ -6,7 +6,7 @@ import version from './version';
 export default class {
 
     static async getKadala() {
-        let cache = await redis.getAsync('kadala');
+        let cache = await redis.getAsync('leah-kadala');
         if (cache) return JSON.parse(cache);
         let build = await version.getVersion().catch(() => {
             console.error('failed to load version');
@@ -22,7 +22,7 @@ export default class {
             kadala.Items[item].id = item;
             return kadala.Items[item];
         });
-        await redis.set('kadala', JSON.stringify([items, kadala.ItemTypes, kadala.Types, kadala.Classes]), 'EX', 86400);
+        await redis.set('leah-kadala', JSON.stringify([items, kadala.ItemTypes, kadala.Types, kadala.Classes]), 'EX', 86400);
         return [items, kadala.ItemTypes, kadala.Types, kadala.Classes];
     }
 

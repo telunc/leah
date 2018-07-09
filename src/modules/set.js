@@ -6,7 +6,7 @@ import version from './version';
 export default class {
 
     static async getSets() {
-        let cacheSet = await redis.getAsync('sets');
+        let cacheSet = await redis.getAsync('leah-sets');
         if (cacheSet) return JSON.parse(cacheSet);
         let build = await version.getVersion().catch(() => {
             console.error('failed to load version');
@@ -19,7 +19,7 @@ export default class {
             results[set].id = set;
             return results[set];
         });
-        await redis.set('sets', JSON.stringify(sets), 'EX', 86400);
+        await redis.set('leah-sets', JSON.stringify(sets), 'EX', 86400);
         return sets;
     }
 
