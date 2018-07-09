@@ -27,10 +27,7 @@ help   : Show this message
 \`\`\`
 
 **Website:**
-<http://leah.moe>
-
-**Donate:**
-<https://www.patreon.com/leahbot>
+<http://leah.telunchen.com>
 
 **Support:**
 https://discord.gg/etpF4PB`;
