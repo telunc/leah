@@ -1,13 +1,17 @@
 import rp from 'request-promise';
 import redis from './redis';
 import { compareTwoStrings } from 'string-similarity';
+import version from './version';
 
 export default class {
 
     static async getSkills() {
         let cacheSkills = await redis.getAsync('leah-skills');
         if (cacheSkills) return JSON.parse(cacheSkills);
-        let results = await rp({ uri: 'http://d3planner.com/game/json/powers', gzip: true, json: true }).catch(() => {
+        let build = await version.getVersion().catch(() => {
+            console.error('failed to load version');
+        });
+        let results = await rp({ uri: `http://d3planner.com/api/${build}/powers`, gzip: true, json: true }).catch(() => {
             console.error('failed to load skills');
         });
         if (!results) return;
