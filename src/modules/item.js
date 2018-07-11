@@ -18,7 +18,7 @@ export default class {
         });
         if (!results) return;
         let items = Object.keys(results).map((item) => {
-            results[item].id = `${slugify(results[item].name, {lower: true})}-${item}`;
+            results[item].id = `${slugify(results[item].name.replace('\'', ''), {lower: true})}-${item}`;
             return results[item];
         });
         await redis.set('leah-items', JSON.stringify(items), 'EX', 86400);
@@ -29,7 +29,7 @@ export default class {
         let cacheItem = await redis.getAsync(`leah-${region}-items-${id}`);
         if (cacheItem) return JSON.parse(cacheItem);
         let item = await rp({ uri: `https://${region}.api.battle.net/d3/data/item/${id}?apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
-            console.error(`failed to items with id ${id} in ${region} region`);
+            console.error(`failed to load item with id ${id} in ${region} region`);
         });
         if (!item) return;
         await redis.set(`leah-${region}-items-${id}`, JSON.stringify(item), 'EX', 86400);
@@ -43,7 +43,8 @@ export default class {
             if (name && item.name) {
                 item.similarity = compareTwoStrings(name, item.name);
                 if (item.powers) item.similarity += 0.0001;
-                if (item.id.includes('P61')) item.similarity -= 0.0001;
+                if (item.drop_classes) item.similarity += 0.001;
+                if (item.drop_weight > 0) item.similarity += 0.001;
             } else {
                 item.similarity = 0;
             }
