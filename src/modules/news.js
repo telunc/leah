@@ -8,7 +8,7 @@ export default class {
 
     static async scrapeNews() {
         try {
-            return await rp({ url: 'https://us.battle.net/d3/en/' }).catch(() => {
+            return await rp({ url: 'https://us.diablo3.com/en/' }).catch(() => {
                 console.error('failed to fetch news');
             });
         } catch (error) {
@@ -24,7 +24,7 @@ export default class {
         while (match = news_regex.exec(body)) {
             let [, uri, image, title, description] = match;
             news.push({
-                uri: (uri.startsWith('http')) ? uri : 'https://us.battle.net' + uri,
+                uri: (uri.startsWith('http')) ? uri : 'https://us.diablo3.com' + uri,
                 image: 'http:' + image,
                 title: XmlEntities.decode(title),
                 description: XmlEntities.decode(description)
