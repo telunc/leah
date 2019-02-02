@@ -9,7 +9,7 @@ export default class {
     static async getToken(region) {
         let cacheToken = await redis.getAsync(`leah-${region}-token`);
         if (cacheToken) return cacheToken;
-        let result = await rp({ uri: `https://${region}.battle.net/oauth/token?grant_type=client_credentials&client_id=${config.get('battle-net').key}&client_secret=${config.get('battle-net').secret}`, json: true }).catch((error) => {
+        let result = await rp({ uri: `https://${region}.battle.net/oauth/token?grant_type=client_credentials`, auth: {username: config.get('battle-net').key, password: config.get('battle-net').secret}, json: true }).catch((error) => {
             console.error('failed to fetch access token', error);
         });
         if (!result) return;
@@ -22,7 +22,7 @@ export default class {
         if (cacheEra) return JSON.parse(cacheEra);
         let token = await this.getToken(region);
         if (!token) return;
-        let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/era/${era}?access_token=${token}`, json: true }).catch(() => {
+        let result = await rp({ uri: `https://${region}.api.blizzard.com/data/d3/era/${era}/`, headers: { Authorization: `Bearer ${token}` }, json: true }).catch(() => {
             // console.error('failed to fetch era index');
         });
         if (!result) return;
@@ -36,7 +36,7 @@ export default class {
         if (cacheLeaderboard) return JSON.parse(cacheLeaderboard);
         let token = await this.getToken(region);
         if (!token) return;
-        let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/era/${era}/leaderboard/${leaderboard}?access_token=${token}`, json: true }).catch((error) => {
+        let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/era/${era}/leaderboard/${leaderboard}/`, headers: { Authorization: `Bearer ${token}` }, json: true }).catch((error) => {
             console.error('failed to fetch era leaderboard', error);
         });
         if (!result) return;
@@ -49,7 +49,7 @@ export default class {
         if (cacheSeason) return JSON.parse(cacheSeason);
         let token = await this.getToken(region);
         if (!token) return;
-        let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/season/${season}?access_token=${token}`, json: true }).catch(() => {
+        let result = await rp({ uri: `https://${region}.api.blizzard.com/data/d3/season/${season}/`, headers: { Authorization: `Bearer ${token}` }, json: true }).catch(() => {
             // console.error('failed to fetch season index');
         });
         if (!result) return;
@@ -63,7 +63,7 @@ export default class {
         if (cacheLeaderboard) return JSON.parse(cacheLeaderboard);
         let token = await this.getToken(region);
         if (!token) return;
-        let result = await rp({ uri: `https://${region}.api.battle.net/data/d3/season/${season}/leaderboard/${leaderboard}?access_token=${token}`, json: true }).catch((error) => {
+        let result = await rp({ uri: `https://${region}.api.blizzard.com/data/d3/season/${season}/leaderboard/${leaderboard}/`, headers: { Authorization: `Bearer ${token}` }, json: true }).catch((error) => {
             console.error('failed to fetch season leaderboard', error);
         });
         if (!result) return;
@@ -74,9 +74,11 @@ export default class {
     static async getCareer(region, battleTag) {
         let cacheCareer = await redis.getAsync(`leah-career-${region}-${battleTag}`);
         if (cacheCareer) return JSON.parse(cacheCareer);
-        let career = await rp({ uri: `https://${region}.api.battle.net/d3/profile/${battleTag}/?apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
-            // console.error(`failed to fetch career with battleTag ${battleTag}`);
+        let token = await this.getToken(region);
+        let career = await rp({ uri: `https://${region}.api.blizzard.com/d3/profile/${battleTag}/`, headers: { Authorization: `Bearer ${token}` },json: true }).catch(() => {
+            console.error(`failed to fetch career with battleTag ${battleTag}`);
         });
+        // console.log(career);
         if (!career) return;
         await redis.set(`leah-career-${region}-${battleTag}`, JSON.stringify(career), 'EX', 86400);
         return career;
@@ -85,7 +87,8 @@ export default class {
     static async getHero(region, battleTag, id) {
         let cacheHero = await redis.getAsync(`leah-${region}-${battleTag}-${id}`);
         if (cacheHero) return JSON.parse(cacheHero);
-        let hero = await rp({ uri: `https://${region}.api.battle.net/d3/profile/${battleTag}/hero/${id}?apikey=${config.get('battle-net').key}`, json: true }).catch(() => {
+        let token = await this.getToken(region);
+        let hero = await rp({ uri: `https://${region}.api.blizzard.com/d3/profile/${battleTag}/hero/${id}/`, headers: { Authorization: `Bearer ${token}` }, json: true }).catch(() => {
             // console.error(`failed to fetch hero with id ${id}`);
         });
         if (!hero) return;

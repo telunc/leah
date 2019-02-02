@@ -21,7 +21,7 @@ export default async(tokens, message) => {
 
     let choice = await collector(message);
     if (!heroes[choice - 1]) return message.channel.send({ embed: { title: 'Request cancelled', color: 0xFF33A2 } });
-
+    
     let hero = await Profile.getHero(region, battleTag, heroes[choice - 1].id);
     if (!hero) return;
 
