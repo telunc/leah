@@ -6,7 +6,6 @@
 </h1>
 <h4 align="center">A multi-purpose bot for Diablo 3.</h4>
 <p align="center">
-  <a href="https://discord.gg/etpF4PB" target="_blank"><img src="https://discordapp.com/api/guilds/354526456812011530/widget.png" alt="Discord"></a>
   <a href="https://david-dm.org/telunc/leah" title="dependencies status"><img src="https://david-dm.org/telunc/leah/status.png"/></a>
   <a href="https://travis-ci.org/telunc/leah" target="_blank"><img src="https://travis-ci.org/telunc/leah.svg?branch=master"></a>
 </p>
